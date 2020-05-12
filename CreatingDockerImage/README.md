@@ -79,7 +79,7 @@ $ aws iam get-user --output json
 }
 ```
 
-> Para esse comando ser bem sucedido, as credências configuradas no AWS CLI devem ter permissão de leitura no AWS IAM.
+> Para esse comando ser bem sucedido, as credênciais configuradas no AWS CLI devem ter permissão de leitura no AWS IAM.
 
 ## 2. Criando sua primeira imagem
 
@@ -148,7 +148,7 @@ Se tudo deu certo, você deve ver sua aplicação web:
 
 ![Web Application](images/web_application.png)
 
-## 3. Criando um repositório de iamgens com ECR
+## 3. Criando um repositório de imagens com ECR
 
 Antes de podermos enviar (_push_) nossas imagens, precisamos de um repositório como destino desse envio.
 Assim, criaremos um com o [AWS ECR](https://aws.amazon.com/ecr/).
@@ -166,7 +166,7 @@ Você verá seu repositório recém criado:
 ![Creation Done](images/creation_done.png)
 
 Agora, acesse o repositório criado clicando no seu nome.
-Agora, clique no botão `View push commands` no canto superior direito.
+Clique no botão `View push commands` no canto superior direito.
 Será mostrada a lista de comandos que você precisa para fazer o _push_ de imagens Docker.
 Os comandos serão algo como:
 
@@ -205,14 +205,14 @@ Login Succeeded
 
 > Se você não consegui logar no ECR, revise suas permissões de grupo e usuário no IAM.
 
-Agora, vamos adicionar a _tag_ a nossa imagem local e envia-la para o repositório ECR. Use os seguintes commandos:
+Agora, vamos adicionar a _tag_ a nossa imagem local e envia-la para o repositório ECR. Use os seguintes comandos:
 
 ```
 $ docker tag containers-workshop-app:latest XXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/containers-workshop-app:latest
 $ docker push XXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/containers-workshop-app:latest
 ```
 
-> :grey*exclamation: Lembre de substituir `XXXXXXXXX` pelo ID de sua conta AWS. Essa informação é apresentada na sua tela do ECR nos comandos de \_push* da imagem Docker.
+> :exclamation: Lembre de substituir `XXXXXXXXX` pelo ID de sua conta AWS. Essa informação é apresentada na sua tela do ECR nos comandos de _push_ da imagem Docker.
 
 Esse passo pode levar alguns minutos.
 Quando finalizado, você deve ver algo como:
