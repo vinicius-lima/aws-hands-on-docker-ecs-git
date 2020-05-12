@@ -37,7 +37,7 @@ Você também pode instalar por distribuição Linux, por exemplo, para [Ubuntu]
 
 ### Instalando o AWS CLI
 
-Durante o _hands on_ vamos interagir com albumas AWS API's.
+Durante o _hands on_ vamos interagir com algumas AWS API's.
 Instalar a versão mais recente do AWS CLI será o mais apropriado.
 
 Instalando AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
@@ -54,3 +54,8 @@ $ git clone https://github.com/vinicius-lima/aws-hands-on-docker-ecs-git.git
 
 Após clonar o repositório, você verá que uma nova pasta chamada `aws-hands-on-docker-ecs-git` foi criada.
 Todo o conteúdo do workshop está disponível nessa pasta.
+
+## Próximo etapa
+
+Crie uma imagem Docker, teste localmente e suba a imagem para o AWS ECR.
+O passo a passo pode ser encontrado em [Criando uma imagem Docker](/CreatingDockerImage).
