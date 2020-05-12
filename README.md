@@ -65,7 +65,7 @@ $ git clone https://github.com/vinicius-lima/aws-hands-on-docker-ecs-git.git
 Após clonar o repositório, você verá que uma nova pasta chamada `aws-hands-on-docker-ecs-git` foi criada.
 Todo o conteúdo do workshop está disponível nessa pasta.
 
-## Próximo etapa
+## Próxima etapa
 
 Crie uma imagem Docker, teste localmente e suba a imagem para o AWS ECR.
 O passo a passo pode ser encontrado em [Criando uma imagem Docker](/CreatingDockerImage).
