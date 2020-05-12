@@ -22,6 +22,16 @@ Assim, caso ainda não possua sua conta, siga os passos na página oficial da AW
 2. Siga as instruções online.
    > Parte do procedimento de cadastro envolve uma chamada telefônica e a digitação de um código de verificação usando o teclado do telefone
 
+Pelas boas práticas de segurança pregadas pela AWS, não é recomendado utilizar a conta root para fazer operações do dia a dia.
+Assim, crie um grupo com permissões de administrador e logo após crie um usuário para fazer parte desse grupo.
+Use então as credenciais desse novo usuário para configurar o AWS CLI e para concluír as etapas desse _hands on_.
+
+Para criar um grupo no IAM: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_create.html
+
+> Adicione a política _AdministratorAccess_ ao grupo de administradores.
+
+Para criar um usuário: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
+
 ### Instalando o Git
 
 Download e instalação: https://git-scm.com/downloads
