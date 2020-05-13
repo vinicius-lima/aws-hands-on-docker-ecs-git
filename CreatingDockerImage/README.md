@@ -245,3 +245,6 @@ $ aws ecr list-images --repository-name=containers-workshop-app
 ```
 
 ## Próxima etapa
+
+Agora com a imagem armazenada no ECR, crie um serviço no Amazon ECS com essa imagem.
+O passo a passo pode ser encontrdo em [Criando um cluster ECS](/DeployEcsCluster).
