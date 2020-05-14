@@ -236,8 +236,8 @@ $ aws ecr list-images --repository-name=containers-workshop-app
 {
     "imageIds": [
         {
-            "imageTag": "latest",
-            "imageDigest": "sha256:38588bb240b57d123522ab3d23107cec6438d7a99f1379445fbea27dafc58608"
+            "imageDigest": "sha256:293aaf158048c1a52d746047ae411f7f9d2061e5e51ea2fe9875f355f7a9d85a",
+            "imageTag": "latest"
         }
     ]
 }
