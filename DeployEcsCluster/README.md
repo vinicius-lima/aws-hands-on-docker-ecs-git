@@ -44,11 +44,11 @@ Então clique em **Create** no fim da tela.
 
 Quando o processo de criação acabar, você verá a seguinte tela:
 
-[Launch status]
+![Launch status](images/launch_status.png)
 
 Clique no botão `View Cluster` para ver seu cluster:
 
-[Cluster screen]
+![Cluster screen](images/cluster_screen.png)
 
 ## 3. Criando um ALB
 
@@ -99,25 +99,25 @@ Para descobrir qual _security group_ está aplicado as suas instâncias, você p
 Você verá que possui uma instância rodando.
 Clique no ID da instância em **EC2 Instance**:
 
-[ECS Instances]
+![ECS Instances](images/ecs_instances.png)
 
 No _EC2 service dashboard_, serão apresentadas todas as informações sobre a instância.
 Nessa tela, clique no nome do _security group_:
 
-[EC2 SG]
+![EC2 SG](images/ec2_security_group.png)
 
 Na nova tela, com o _security group_ selecionado, clique na tab **Inbound rules** então em **Edit inbound rules**.
 Aqui temos a regra criada anteriormente que permite tráfego na porta 80 de qualquer origem.
 Vamos mudar essa regra para permitir qualquer tráfego vindo apenas do _security group_ do ALB para nossa instância EC2.
-Começe mudando `Type` para `All traffic` e no campo `Source` começe a digitar `sg-`.
+Começe mudando `Type` para `All traffic`, clique no `X` próximo a entrada `0.0.0.0/0` e no campo `Source` começe a digitar `sg-`.
 Você verá uma lista com todos os _security groups_ criados na conta AWS.
 Selecione o _security group_ `containers-workshop-alb-sg` e clique em **Save rules**:
 
-[Editing SG]
+![Editing SG](images/editing_security_group.png)
 
 Após as mudanças, o _security group_ da sua instância deve ser similar a isso:
 
-[SG after changes]
+![SG after changes](images/security_group_changed.png)
 
 Nesse ponto, suas instâncias EC2 receberão tráfego do seu ALB.
 
@@ -193,7 +193,7 @@ Volte a [tela de clusters](https://console.aws.amazon.com/ecs/) no console do EC
 
 Na página de detalhes do cluster, clique em **Create** na tab `Services`:
 
-[Details page]
+![Details page](images/cluster_details_page.png)
 
 Selecione `EC2` como `Launch type` e escolha a _Task Definition_ criada na seção anterior.
 Para o tutorial iremos executar apenas uma instância da _task_.
@@ -201,28 +201,28 @@ Para o tutorial iremos executar apenas uma instância da _task_.
 > Em ambientes de produção, o recomendado é executar mais de uma instância da _task_ para confiabilidade e disponibilidade.
 
 Nomeie seu serviço `containers-workshop-ecs-service`.
-Mantenha o valor padrão **AZ Balanced Spread** para _Task Placement Policy_. Para saber mais sobre os diferentes tipos de polícas para implantação de _tasks_, veja a [documentação](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html) ou esse [blog post](https://aws.amazon.com/blogs/compute/introducing-amazon-ecs-task-placement-policies/).
+Mantenha o valor padrão **Rolling update** para _Deployment type_ e **AZ Balanced Spread** para _Task Placement Policy_. Para saber mais sobre os diferentes tipos de políticas para implantação de _tasks_, veja a [documentação](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html) ou esse [blog post](https://aws.amazon.com/blogs/compute/introducing-amazon-ecs-task-placement-policies/).
 
-[Service Name]
+![Service Name](images/ecs_service_name.png)
 
-Clique em **Next**
-
-Em **Service discovery (optional)** desmarque **Enable service discovery integration**.
+Clique em **Next step**
 
 Em `Load balancing`, selecione `Application Load Balancer`.
 Vamos configurar a integração entre o serviço do ECS e o ALB, assim poderemos acessar nossa aplicação através do ALB.
 Selecione `Create new role` em **Service IAM role** e selecione o container `containers-workshop-app:0:80` em **Container to load balance**. Clique em `Add to load balancer`:
 
-[ALB configuration]
+![ALB configuration](images/alb_configuration.png)
 
 Quando criamos nosso ALB, adicionamos um listener para HTTP:80.
-Selecione esse valor no _dropdown menu_ como para **Listener**.
+Selecione esse valor no _dropdown menu_ para **Listener**.
 Para **Target group name**, entre com o valor `containers-workshop-ecs-target`.
 Para **Path Pattern**, o valor deve ser `/*`.
 Em **Eveluation order**, coloque o valor `1`.
 Para encerrar, em **Health check path** use `/`.
 
-[ALB configuration 2]
+![ALB configuration 2](images/alb_configuration_2.png)
+
+Em **Service discovery (optional)** desmarque **Enable service discovery integration**.
 
 Se os valores parecem corretos, clique em **Next Step**.
 
@@ -233,14 +233,14 @@ Não usaremos _Auto Scaling_ nesse tutorial, assim, em `Set Auto Scaling`, cliqu
 Você pode visualizar os eventos do serviço no console do ECS.
 Podemos checar se o serviço foi implantado e registrado apropriadamente com o ALB olhando a tab **Events**:
 
-[Events tab]
+![Events tab](images/service_events_tab.png)
 
 Podemos testar o ALB em sí.
 Para encontrar o registro DNS A do nosso ALB, vá no console do EC2 > **Load balancers** > **Selecione seu Load Balancer**.
 Em **Description**, encontramos detalhes sobre o ALB, incluindo uma seção para **DNS Name**.
 Entre esse valor em um navegador.
 
-[Testing ALB]
+![Testing ALB](images/testing_alb.png)
 
 Note que o ALB roteia tráfego apropriadamente baseando-se no _path_ (`/`) que especificamos ao registrar o container.
 

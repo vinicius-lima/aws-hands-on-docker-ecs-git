@@ -219,15 +219,14 @@ Quando finalizado, você deve ver algo como:
 
 ```
 The push refers to a repository [XXXXXXXXX.dkr.ecr.us-east-1.amazonaws.com/containers-workshop-app]
-9ef5219507db: Pushed
-b3d18e8f520f: Pushed
-a83b4d2ff3a0: Pushed
-2f5b0990636a: Pushed
-c9748fbf541d: Pushed
-b3968bc26fbd: Pushed
-aa4e47c45116: Pushed
-788ce2310e2f: Pushed
-latest: digest: sha256:38588bb240b57d123522ab3d23cec642907a99f1379445fbea27dafc58608 size: 1988
+4e02160bb335: Pushed
+218f9dabbd47: Pushed
+f64420a2902a: Pushed
+df3749128504: Pushed
+5f22987f73bb: Pushed
+d57c165262f1: Pushed
+a120b7c9a693: Pushed
+latest: digest: sha256:293aaf158048c1a52d746047ae411f7f9d2061e5e51ea2fe9875f355f7a9d85a size: 1796
 ```
 
 Você pode listar suas imagens enviadas para o ECR através do console web ou pelo CLI:
