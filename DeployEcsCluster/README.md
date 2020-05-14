@@ -95,7 +95,7 @@ Se os valores informados parecem corretos, clique em **Create**:
 ![Finish ALB](images/finish_alb.png)
 
 Após criar seu ALB, será necessário atualizar as regras no _security group_ para que o ALB possa acessar as instâncias EC2 onde o container irá executar.
-Para descobrir qual _security group_ está aplicado a suas instâncias, você pode acessar o console do ECS, selecionar o cluster `containers-workshop-ecs-cluster` e então selecionar a tab _ECS Instances_.
+Para descobrir qual _security group_ está aplicado as suas instâncias, você pode acessar o console do ECS, selecionar o cluster `containers-workshop-ecs-cluster` e então selecionar a tab _ECS Instances_.
 Você verá que possui uma instância rodando.
 Clique no ID da instância em **EC2 Instance**:
 
@@ -133,7 +133,7 @@ As `Tasks` são definidas em uma configuração chamada `Task Definition`.
 Uma `Task Definition` é onde você especifica sua _task_.
 Informações como versão da imagem Docker, quantidade de CPU e memória que cada container irá consumir, quais portas devem ser mapeadas, volumes, variáveis de ambiente, entre outras informações que são especificadas na _Task Definition_.
 
-A primeira informação necessário é a imagem Docker que queremos utilizar.
+A primeira informação necessária é a imagem Docker que queremos utilizar.
 Nesse caso, iremos usar a imagem criada no [tutorial anterior](../CreatingDockerImage).
 
 Para pegar a imagem, vá até a [página do ECR](https://console.aws.amazon.com/ecr) e clique em `Repositories`.
@@ -181,3 +181,69 @@ Há várias opções, mas para esse tutorial selecione **Auto-configure CloudWat
 Assim que inserir um driver de log, clique em **Add** e finalmente clique em **Create** no final da tela.
 
 ## 5. Criando o Serviço
+
+Agora que temos na `Task Definition` a descrição de tudo que é necessário para executar nossa aplicação, o próximo passo é rodar o container usando o Amazon ECS.
+Faremos isso criando um serviço (`Service`).
+
+No ECS, `Service` permite você executar e manter um número específico (_desired count_) de instâncias de uma `Task Definition` simultaneamente em um cluster ECS.
+Se alguma de suas _tasks_ parar ou falhar por qualquer razão, o Amazon ECS lança outra instância da _task_ para substituir e manter o número de _tasks_ em serviço.
+Mais informações sobre _ECS Services_ na [documentação do ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html).
+
+Volte a [tela de clusters](https://console.aws.amazon.com/ecs/) no console do ECS e clique no nome do cluster `containers-workshop-ecs-cluster`.
+
+Na página de detalhes do cluster, clique em **Create** na tab `Services`:
+
+[Details page]
+
+Selecione `EC2` como `Launch type` e escolha a _Task Definition_ criada na seção anterior.
+Para o tutorial iremos executar apenas uma instância da _task_.
+
+> Em ambientes de produção, o recomendado é executar mais de uma instância da _task_ para confiabilidade e disponibilidade.
+
+Nomeie seu serviço `containers-workshop-ecs-service`.
+Mantenha o valor padrão **AZ Balanced Spread** para _Task Placement Policy_. Para saber mais sobre os diferentes tipos de polícas para implantação de _tasks_, veja a [documentação](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html) ou esse [blog post](https://aws.amazon.com/blogs/compute/introducing-amazon-ecs-task-placement-policies/).
+
+[Service Name]
+
+Clique em **Next**
+
+Em **Service discovery (optional)** desmarque **Enable service discovery integration**.
+
+Em `Load balancing`, selecione `Application Load Balancer`.
+Vamos configurar a integração entre o serviço do ECS e o ALB, assim poderemos acessar nossa aplicação através do ALB.
+Selecione `Create new role` em **Service IAM role** e selecione o container `containers-workshop-app:0:80` em **Container to load balance**. Clique em `Add to load balancer`:
+
+[ALB configuration]
+
+Quando criamos nosso ALB, adicionamos um listener para HTTP:80.
+Selecione esse valor no _dropdown menu_ como para **Listener**.
+Para **Target group name**, entre com o valor `containers-workshop-ecs-target`.
+Para **Path Pattern**, o valor deve ser `/*`.
+Em **Eveluation order**, coloque o valor `1`.
+Para encerrar, em **Health check path** use `/`.
+
+[ALB configuration 2]
+
+Se os valores parecem corretos, clique em **Next Step**.
+
+Não usaremos _Auto Scaling_ nesse tutorial, assim, em `Set Auto Scaling`, clique em **Next Step** e após revisar as configurações, clique em **Create Service**.
+
+## 6. Testando o serviço
+
+Você pode visualizar os eventos do serviço no console do ECS.
+Podemos checar se o serviço foi implantado e registrado apropriadamente com o ALB olhando a tab **Events**:
+
+[Events tab]
+
+Podemos testar o ALB em sí.
+Para encontrar o registro DNS A do nosso ALB, vá no console do EC2 > **Load balancers** > **Selecione seu Load Balancer**.
+Em **Description**, encontramos detalhes sobre o ALB, incluindo uma seção para **DNS Name**.
+Entre esse valor em um navegador.
+
+[Testing ALB]
+
+Note que o ALB roteia tráfego apropriadamente baseando-se no _path_ (`/`) que especificamos ao registrar o container.
+
+## Próxima etapa
+
+Após fazer todos os testes que desejar com a infraestrutura criada nesse tutorial, não se esqueça de deletar os recursos criados para evitar cobranças futuras ou o esgotamento de seus limites do _free tier_.
