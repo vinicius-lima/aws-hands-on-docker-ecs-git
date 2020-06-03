@@ -77,7 +77,7 @@ Podemos pular essa tela clicando em **Next: Configure Security Groups**.
 
 Vamos criar um _security group_ para ser usado pelo ALB.
 Em _Step 3: Configure Secury Groups_, selecione a opção `Create a new security group`.
-Mude **Security group name** para `containers-workshop-alb-sg` e crie uma regra permitindo a entrada de qualquer tráfego na porta 80:
+Mude **Security group name** para `containers-workshop-alb-sg` e crie uma regra permitindo a entrada de qualquer origem (_source_) na porta 80:
 
 ![Configure SG](images/configure_sg.png)
 
@@ -217,7 +217,7 @@ Quando criamos nosso ALB, adicionamos um listener para HTTP:80.
 Selecione esse valor no _dropdown menu_ para **Listener**.
 Para **Target group name**, entre com o valor `containers-workshop-ecs-target`.
 Para **Path Pattern**, o valor deve ser `/*`.
-Em **Eveluation order**, coloque o valor `1`.
+Em **Evaluation order**, coloque o valor `1`.
 Para encerrar, em **Health check path** use `/`.
 
 ![ALB configuration 2](images/alb_configuration_2.png)
